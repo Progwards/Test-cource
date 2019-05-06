@@ -7,7 +7,7 @@ public class CompetitionRunner {
 		String str = "";
 		int n = 0;
 		for(String name : students) {
-			str += 	"      {\"name\": "+name+", \"number\": "+(++n)+", \"points\": "+runOne(name)+"}";
+			str += 	"      {\"name\": \""+name+"\", \"number\": "+(++n)+", \"points\": "+runOne(name)+"}";
 			if (n<students.length)
 				str += ",";
 			str += "\r\n";
