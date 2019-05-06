@@ -13,7 +13,7 @@ public class CompetitionRunner {
 			str += "\r\n";
 		}
  		
-		return "{\"competition\": {\r\n" + 				"  \"name\": \"Морской бой\",\r\n" + 
+		return "{\"competition\": {\r\n" + 				"  \"name\": \"Sea Battle\",\r\n" + 
 				"  \"results\": {\r\n" + 
 				"    \"student\": [\r\n" +
 				str+
