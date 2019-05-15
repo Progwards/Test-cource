@@ -1,49 +1,49 @@
 package ru.progwards.java1.SeaBattle;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+
+import ru.progwards.lms.main.CompetitionHelper;
+import ru.progwards.lms.main.CompetitionResult;
 
 public class CompetitionRunner {
+	private static final String className = "BattleAlg";
+	private static final String methodName = "test";
+	
 	public static String run(String[] students) {
-		String str = "";
-		int n = 0;
-		for(String name : students) {
-			str += 	"      {\"name\": \""+name+"\", \"number\": "+(++n)+", \"points\": "+runOne(name)+"}";
-			if (n<students.length)
-				str += ",";
-			str += "\r\n";
-		}
+		ArrayList<CompetitionResult> results =  new ArrayList<CompetitionResult>();
+		for(String name : students)
+			results.add(new CompetitionResult(name, runOne(name)));
  		
-		return "{\"competition\": {\r\n" + 				"  \"name\": \"Sea Battle\",\r\n" + 
-				"  \"results\": {\r\n" + 
-				"    \"student\": [\r\n" +
-				str+
-				"    ]\r\n" + 
-				"  }\r\n" + 
-				"}}";
+		return CompetitionHelper.getResultJSON("Морской бой", results);  
 	}
 
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static String runOne(String name) {
+	private static double runOne(String name) {
 		String pname = CompetitionRunner.class.getName();
 		int n = pname.lastIndexOf(".");
 		pname = pname.substring(0, n+1)+name;
 		try {
-			Class classs = Class.forName(pname+".BattleAlg");
-			Class[] params = {};
-			BattleAlg alg = (BattleAlg) classs.getConstructor(params).newInstance();
-			return alg.test("2");
-			//System.out.println(alg.test("1"));
+			// получаем ссылку на класс
+			Class cls = Class.forName(pname+"."+className);
+			// вызов конструктора без параметров
+			Class[] emptyParam = {};
+			Object alg = cls.getConstructor(emptyParam).newInstance();
+			// вызов метода с параметрами
+			Class[] paramTypes = new Class[] {String.class};
+			Object[] args = new Object[]{new String("3")};
+			return (Double)cls.getMethod(methodName, paramTypes).invoke(alg, args);
 	   } catch (InstantiationException | IllegalAccessException | ClassNotFoundException |
 			   NoSuchMethodException | InvocationTargetException e) {
 	       //e.printStackTrace();
-		   return "0";
+		   return 0.0;
 	   }
 	}
 
 	public static void main (String[] args) 
 	{
-		String[] students = { "vpupkin", "pvasechkin", "iivinov" };
+		String[] students = { "pvasechkin", "iivanov", "vpupkin" };
 		System.out.println(run(students));
 	} 
 }
