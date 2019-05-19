@@ -18,12 +18,12 @@ public class CompetitionHelper {
 		int n = 0;
 		Collections.sort(results, new CompetitionComparator());
 		for(CompetitionResult result : results) {
-			str += 	"      {\"name\": "+result.getName()+", \"number\": "+(++n)+", \"points\": "+result.getPoints()+"}";
+			str += 	"      {\"name\": \""+result.getName()+"\", \"number\": "+(++n)+", \"points\": "+result.getPoints()+"}";
 			if (n < results.size())
 				str += ",";
 			str += "\r\n";
 		}
-		return "{\"competition\": {\r\n" + 				"  \"name\": "+name+",\r\n" + 
+		return "{\"competition\": {\r\n" + 				"  \"name\": \""+name+"\",\r\n" + 
 		"  \"results\": {\r\n" + 
 		"    \"student\": [\r\n" +
 		str+

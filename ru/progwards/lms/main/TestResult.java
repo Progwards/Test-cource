@@ -5,22 +5,22 @@ import org.junit.runner.notification.Failure;
 
 public class TestResult {
 	
-	private final static String dmErrorMessage = "не пройден."; 
-	private final static String dmOkMessage = "пройден успешно."; 
+	private final static String dmErrorMessage = "РЅРµ РїСЂРѕР№РґРµРЅ."; 
+	private final static String dmOkMessage = "РїСЂРѕР№РґРµРЅ СѓСЃРїРµС€РЅРѕ."; 
 	private final static String dmErrorPrefix = "ERROR"; 
 	private final static String dmOkPrefix = "OK"; 
-	private final static String dmTotalOkMessage = "TOTAL: В целом зачет, решение принято."; 
-	private final static String dmTotalErrorMessage = "TOTAL: В целом не зачет, решение возвращено не доработку."; 
-	private final static String dmPercentMessage = "Задание выролнено на"; 
-	private final static String dmExeptionMessage = "Во время выполнения возникло исключение "; 
-	// массив с данными для процессинга результата теста
-	// 0: имя теста, как в assert, лучше всего ставить имя функции
+	private final static String dmTotalOkMessage = "TOTAL: Р’ С†РµР»РѕРј Р·Р°С‡РµС‚, СЂРµС€РµРЅРёРµ РїСЂРёРЅСЏС‚Рѕ."; 
+	private final static String dmTotalErrorMessage = "TOTAL: Р’ С†РµР»РѕРј РЅРµ Р·Р°С‡РµС‚, СЂРµС€РµРЅРёРµ РІРѕР·РІСЂР°С‰РµРЅРѕ РЅРµ РґРѕСЂР°Р±РѕС‚РєСѓ."; 
+	private final static String dmPercentMessage = "Р—Р°РґР°РЅРёРµ РІС‹СЂРѕР»РЅРµРЅРѕ РЅР°"; 
+	private final static String dmExeptionMessage = "Р’Рѕ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ РІРѕР·РЅРёРєР»Рѕ РёСЃРєР»СЋС‡РµРЅРёРµ "; 
+	// РјР°СЃСЃРёРІ СЃ РґР°РЅРЅС‹РјРё РґР»СЏ РїСЂРѕС†РµСЃСЃРёРЅРіР° СЂРµР·СѓР»СЊС‚Р°С‚Р° С‚РµСЃС‚Р°
+	// 0: РёРјСЏ С‚РµСЃС‚Р°, РєР°Рє РІ assert, Р»СѓС‡С€Рµ РІСЃРµРіРѕ СЃС‚Р°РІРёС‚СЊ РёРјСЏ С„СѓРЅРєС†РёРё
 	private final static int tdName = 0; 
-	// 1: описание теста словами
+	// 1: РѕРїРёСЃР°РЅРёРµ С‚РµСЃС‚Р° СЃР»РѕРІР°РјРё
 	private final static int tdTitle = 1; 
-	// 2: баллы за эту часть теста
+	// 2: Р±Р°Р»Р»С‹ Р·Р° СЌС‚Сѓ С‡Р°СЃС‚СЊ С‚РµСЃС‚Р°
 	private final static int tdGrade = 2; 
-	// 3: * отмечены обязательные части теста
+	// 3: * РѕС‚РјРµС‡РµРЅС‹ РѕР±СЏР·Р°С‚РµР»СЊРЅС‹Рµ С‡Р°СЃС‚Рё С‚РµСЃС‚Р°
 	private final static int tdObligatory = 3; 
 	
 	public boolean pass;
@@ -90,14 +90,14 @@ public class TestResult {
 			boolean testPassed =  true;
 			String message = "";
 			
-			// для каждой проверки будет выдана строка в лог
-			// data[0] содержит информацию о всем тесте, поэтому первую строку пропускаем
+			// РґР»СЏ РєР°Р¶РґРѕР№ РїСЂРѕРІРµСЂРєРё Р±СѓРґРµС‚ РІС‹РґР°РЅР° СЃС‚СЂРѕРєР° РІ Р»РѕРі
+			// data[0] СЃРѕРґРµСЂР¶РёС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РІСЃРµРј С‚РµСЃС‚Рµ, РїРѕСЌС‚РѕРјСѓ РїРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ РїСЂРѕРїСѓСЃРєР°РµРј
 			for(int i=1; i<data.length; i++) {
 				boolean passed = true;
 				String[] tst = data[i];
 				for(Failure fail : result.getFailures()) {
 					if (parseTestName(fail.getTestHeader()).equals(tst[tdName])) {
-						message += dmErrorPrefix+": Тест \""+getName(tst)+"\" "+ dmErrorMessage + " ";
+						message += dmErrorPrefix+": РўРµСЃС‚ \""+getName(tst)+"\" "+ dmErrorMessage + " ";
 						if (fail.getException().getClass() == java.lang.AssertionError.class)
 							message +=  (fail.getMessage() == null ? "" : fail.getMessage()) + "\n";
 						else
@@ -110,12 +110,12 @@ public class TestResult {
 					}
 				}
 				if (passed) {
-					message += dmOkPrefix+": Тест \""+getName(tst)+"\" "+ dmOkMessage + "\n";
+					message += dmOkPrefix+": РўРµСЃС‚ \""+getName(tst)+"\" "+ dmOkMessage + "\n";
 					grade += Double.parseDouble(tst[tdGrade]);
 				}
 			}
 			
-			// проверка на прходной балл, если задан
+			// РїСЂРѕРІРµСЂРєР° РЅР° РїСЂС…РѕРґРЅРѕР№ Р±Р°Р»Р», РµСЃР»Рё Р·Р°РґР°РЅ
 			if (passingGrade > 0 && grade < passingGrade)
 				testPassed = false;
 			double percent = 0;
